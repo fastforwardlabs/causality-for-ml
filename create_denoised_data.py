@@ -1,12 +1,13 @@
 '''
 Create a subset dataset based on the original iWildCam data
-
 '''
 import pandas as pd
 import os
 import shutil
 
+# original iWildCam dataset directory
 INPUT_DIR = "/datapool/wildcam/iWildCam/train"
+# subset data directory
 OUTPUT_DIR = "./data/wildcam_denoised"
 
 if __name__ == '__main__':
@@ -17,6 +18,7 @@ if __name__ == '__main__':
         os.mkdir(OUTPUT_DIR)
         test_data_dir = os.path.join(OUTPUT_DIR, 'test')
         os.mkdir(test_data_dir)
+        # creating test environment
         for animal in set(filenames_df["category"].tolist()):
             os.mkdir(os.path.join(test_data_dir, animal))
             subset_df = filenames_df.loc[(filenames_df['category'] == animal)
@@ -24,6 +26,7 @@ if __name__ == '__main__':
             for filename in subset_df['filename'].tolist():
                 shutil.copy2(os.path.join(INPUT_DIR, filename),
                         os.path.join(test_data_dir, animal))
+        # creating training environments
         for train_env in (43, 46):
             train_loc = os.path.join(OUTPUT_DIR, "train_" + str(train_env))
             os.mkdir(train_loc)

@@ -136,7 +136,7 @@ dmypy.json
 # user ignores
 .vscode
 .DS_Store
-/data/wildcam_denoised
+/data/wildcam_denoised/*
 .Rhistory
 
 /__pycache__
