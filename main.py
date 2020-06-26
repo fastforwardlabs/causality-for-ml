@@ -21,7 +21,7 @@ dataset_path = './data/wildcam_denoised'
 
 args_pool = {
     'WILDCAM': {
-        'n_restarts': 5,
+        'n_restarts': 1,
         'steps': 121,
         'n_classes': 2,
         'fc_only': True,
@@ -137,20 +137,5 @@ print('confusion matrix:')
 print(confusion_matrix(y_test.numpy(), preds))
 tn, fp, fn, tp = confusion_matrix(y_test.numpy(), preds).ravel() 
 print(f'tn = {tn}, fp = {fp}, fn = {fn}, tp = {tp}')
-        
-plt.figure(constrained_layout=True, figsize=(3, 3))
-
-# Plot ROC curve
-plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
-plt.plot([0, 1], [0, 1], 'k--')  
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.0])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC')
-plt.legend(loc="lower right")
-outfile = './figures/' + model_name + '.png'
-plt.savefig(outfile, dpi=300, bbox_inches='tight', pad_inches=0) # To save figure
-plt.show() # To show figure    
 
 torch.save(train_process.clf.state_dict(), args['model_path'] + model_name + ".pth")

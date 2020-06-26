@@ -2,41 +2,31 @@
 
 This repo accompanies the prototype code discussed in our [report](https://ff13.fastforwardlabs.com/), specifically the Invariant Risk Minimization (IRM) approach discussed in chapters 3 & 4.
 
-## Contents
-
-Todo:
-- create denoised dataset, this may require us to create a JSON file listing filenames that were actually used. Reuse some old code for this - done
-- fix requirements + make sure that works on CML
-- simply copy - main.py, train.py, models.py, dataset.py + changes 
-- think about model explanation - a CML code / notebook demonstrating an example should be good enough? - could be simply copy-paste in CML
-- simple score/ predict with CML
-- Also, to take a step further, I would like to build a simple UI that allows a user to upload an image, predict IRM score and maybe also show explanations
-
-### Data
-
-#### Step 1: 
-Use Kaggle account to download data. The Camera Traps (or Wild Cams) dataset - [iWildCam 2019](https://github.com/visipedia/iwildcam_comp).
+### Setup environment
 
 ```
-conda install -c conda-forge kaggle
-cd causality-for-ml/data
-
-chmod 600 ~/.kaggle/kaggle.json
-kaggle competitions download -c iwildcam-2019-fgvc6
-unzip iwildcam-2019-fgvc6.zip -d ./iWildCam
-
-unzip train_images.zip -d ./train
+conda create --name irm_env python=3.7 ipykernel
+conda activate irm_env
+conda install pip
+pip install -r requirements.txt
 ```
-NOTE: The test set images are unlabeled so are being ignored from our experiments. Instead, we create a test set from the training data in the next step.
 
-#### Step 2: 
-Run 
-```
-python create_denoised_data.py
-```
-This creates a new directory './data/wildcam_denoised' consisting of the images we used for training and testing both the IRM and ERM models.
+### Setup data
 
-## Structure of repo
+Steps to generate the WildCam dataset used for this experiment. 
+
+- **Step 1** : Download the Camera Traps (or Wild Cams) dataset - [iWildCam 2019](https://github.com/visipedia/iwildcam_comp) using Kaggle.
+    - Use Kaggle account to download data. This involves first creating a new Kaggle API from your account and then downloading the `kaggle.json` file in `[user-home]/.kaggle` folder. If there is no `.kaggle` folder yet, create it and then move the `kaggle.json` to the `.kaggle` folder.
+    - Install kaggle package, `conda install -c conda-forge kaggle`
+    - `chmod 600 ~/.kaggle/kaggle.json`
+    - Download data, `kaggle competitions download -c iwildcam-2019-fgvc6`. Note this is a 44GB file
+    - `unzip iwildcam-2019-fgvc6.zip -d ./iWildCam`
+    - `unzip train_images.zip -qd ./train`. NOTE: The test set images are unlabeled so are being ignored from our experiments. Instead, we create a test set from the training data in the next step.
+
+- **Step 2** :  
+    - Run `python create_denoised_data.py` - This creates a new directory './data/wildcam_denoised' consisting of the images we used for training and testing both the IRM and ERM models.
+
+### Structure of repo
 
 ```
 .
@@ -62,8 +52,28 @@ This creates a new directory './data/wildcam_denoised' consisting of the images 
 └── ./train.py
 
 ```
-## Results
 
-Overview of results and model explanations
+### Training
 
+- Simply run `python main.py` to train an ERM/ IRM model. The arguments `penalty_anneal_iters` and `penalty_weight` when set to 0 trains an ERM model.
+- The model is saved is the `./models` folder
 
+### Results
+
+- Results from training both IRM and ERM are available in `ERM_results.out` and `IRM_results.out` files
+
+### Interpretability
+
+- Notebook provides LIME explanations for a sample image based on the IRM model. For a deeper dive into explanations and comparison between all images based on ERM and IRM model look at our prototype - [Scene](https://scene.fastforwardlabs.com/)
+
+### References
+
+Leveraged source code from the [paper](https://arxiv.org/abs/1907.02893v1):
+```
+@article{InvariantRiskMinimization,
+    title={Invariant Risk Minimization},
+    author={Arjovsky, Martin and Bottou, L{\'e}on and Gulrajani, Ishaan and Lopez-Paz, David},
+    journal={arXiv},
+    year={2019}
+}
+```

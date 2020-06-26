@@ -72,15 +72,8 @@ class Train:
                 else:
                     preds[idxs] = probs           
                     preds_Y[idxs] = temp_preds
-        '''
-        Traditional way of calculating accuracy, getting probs and then using a threshold. 
-        Doesn't quite work the way it should or may be the results are bad with 0.5 threshold
-        but saving the code in case we would want to retrieve probs instead of logits.
-        '''
-        predicted_vals = (preds >= 0.5).long()        
-        predicted_acc = ((preds - Y).abs() < 1e-2).float().mean()
 
-        return predicted_acc, nll/len(loader_te), acc/len(loader_te), preds_Y, preds     
+        return nll/len(loader_te), acc/len(loader_te), preds_Y, preds     
 
     def train(self):        
         n_classes = self.args['n_classes']
@@ -142,7 +135,7 @@ class Train:
             loss.backward()
             optimizer.step()
             
-            _, test_loss, test_acc, preds, probs = self.predict(self.X_te, self.Y_te)
+            test_loss, test_acc, preds, probs = self.predict(self.X_te, self.Y_te)
             
             #acc_test = accuracy_score(self.Y_te.detach().cpu().numpy(), preds.detach().cpu().numpy())
             test_prec = precision_score(self.Y_te.detach().cpu().numpy(), preds.detach().cpu().numpy())

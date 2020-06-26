@@ -6,7 +6,7 @@ import os
 import shutil
 
 # original iWildCam dataset directory
-INPUT_DIR = "/datapool/wildcam/iWildCam/train"
+INPUT_DIR = "/storage/smb79ck2/ndata/iWildCam/train"
 # subset data directory
 OUTPUT_DIR = "./data/wildcam_denoised"
 
