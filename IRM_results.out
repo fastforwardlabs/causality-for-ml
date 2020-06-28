@@ -129,3 +129,70 @@ confusion matrix:
 [[139   5]
  [360  18]]
 tn = 139, fp = 5, fn = 360, tp = 18
+./data/wildcam_denoised/train_43
+== Found 858 items 
+== Found 2 classes
+train environment:  43
+['/coyote', '/raccoon']
+class_indices:  [(0, '/coyote'), (1, '/raccoon')]
+./data/wildcam_denoised/train_46
+== Found 753 items 
+== Found 2 classes
+train environment:  46
+['/coyote', '/raccoon']
+class_indices:  [(0, '/coyote'), (1, '/raccoon')]
+./data/wildcam_denoised/test
+== Found 522 items 
+== Found 2 classes
+['/coyote', '/raccoon']
+
+working with 2 training environments: 
+env['images']:  858
+env['labels']:  858
+class distribution:  582 coyotes and 276 raccoons. baseline accuracy 0.68 (always coyote).
+env['images']:  753
+env['labels']:  753
+class distribution:  512 coyotes and 241 raccoons. baseline accuracy 0.68 (always coyote).
+x_test:  522
+y_test:  522
+test class distribution:  144 coyotes and 378 raccoons. baseline accuracy 0.28 (always coyote).
+Using GPU - True
+
+========================================IRM========================================
+{'n_restarts': 1, 'steps': 121, 'n_classes': 2, 'fc_only': True, 'model_path': './models/', 'transform': {'train': Compose(
+    CenterCrop(size=(224, 224))
+    ToTensor()
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+), 'test': Compose(
+    CenterCrop(size=(224, 224))
+    ToTensor()
+    Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+)}, 'loader_tr_args': {'batch_size': 100, 'num_workers': 1}, 'loader_te_args': {'batch_size': 100, 'num_workers': 1}, 'loader_sample_args': {'batch_size': 100, 'num_workers': 1}, 'optimizer_args': {'lr': 0.001, 'l2_regularizer_weight': 0.001, 'penalty_anneal_iters': 40, 'penalty_weight': 10000.0}}
+
+Restart 0
+step            train nll       train acc       train penalty   test nll        test acc        test prec       test rec     
+0               0.84201         0.29020         0.03132         0.81487         0.28045         0.56522         0.03439      
+10              0.54066         0.67895         0.00259         0.98345         0.26197         0.00000         0.00000      
+20              0.41900         0.79070         0.01581         0.83753         0.28636         0.63636         0.01852      
+30              0.36187         0.81747         0.01000         0.85654         0.27455         0.61538         0.02116      
+40              0.32415         0.85461         0.01120         0.73950         0.33955         0.72340         0.17989      
+50              0.31500         0.85451         0.00757         0.70585         0.40485         0.75969         0.25926      
+60              0.30527         0.86227         0.00709         0.73972         0.35273         0.74783         0.22751      
+70              0.30908         0.85298         0.00517         0.70374         0.40924         0.75214         0.23280      
+80              0.30120         0.86253         0.00473         0.70319         0.42409         0.75862         0.29101      
+90              0.30720         0.85848         0.00371         0.67267         0.49409         0.79397         0.41799      
+100             0.31127         0.85567         0.00265         0.61584         0.58833         0.81481         0.58201      
+110             0.33108         0.84932         0.00228         0.55162         0.73303         0.82955         0.77249      
+120             0.33016         0.84830         0.00258         0.54170         0.75636         0.83065         0.81746      
+Final train acc (mean/std across restarts so far):
+0.848 0.0
+Final test acc (mean/std across restarts so far):
+0.756 0.0
+Final test precision:
+0.8306
+Final test recall:
+0.8175
+confusion matrix:
+[[ 81  63]
+ [ 69 309]]
+tn = 81, fp = 63, fn = 69, tp = 309

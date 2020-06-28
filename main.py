@@ -51,8 +51,8 @@ args_pool = {
         'optimizer_args': {
             'lr': 0.001,
             'l2_regularizer_weight': 0.001,
-            'penalty_anneal_iters': 40, # make this 0 for ERM
-            'penalty_weight': 10000.0 # make this 0 for ERM
+            'penalty_anneal_iters': 0, # make this 0 for ERM
+            'penalty_weight': 0.0 # make this 0 for ERM
         }
     }
 }
