@@ -21,7 +21,7 @@ Steps to generate the WildCam dataset used for this experiment.
     - `chmod 600 ~/.kaggle/kaggle.json`
     - Download data, `kaggle competitions download -c iwildcam-2019-fgvc6`. This is a 44GB file!
     - `unzip iwildcam-2019-fgvc6.zip -d ./iWildCam`
-    - `unzip train_images.zip -qd ./train`. NOTE: The test set images are unlabeled so are being ignored from our experiments. Instead, we create a test set from the training data in the next step.
+    - `unzip -q train_images.zip -d ./train`. NOTE: The test set images are unlabeled so are being ignored from our experiments. Instead, we create a test set from the training data in the next step.
 
 - **Step 2** :  
     - Run `python create_denoised_data.py` - This creates a new directory `./data/wildcam_denoised` consisting of the images we used for training and testing both the IRM and ERM models. The list of images are available in `./data/train_test_filenames.json`.
